@@ -1,0 +1,55 @@
+### put_char($a0, $a1, $a2)
+
+$a0 - starting x cordinate
+$a1 - width of thin bar
+$a2 - character to put
+
+For example, when we want to put A:
+in register $s4 we put sequence: `100001001`
+
+$s3 - address of sequence of bits
+$s4 = `100001001`
+$s5 = `100000000`
+
+$s6 = $s4 AND $s5
+`100001001` AND `100000000` = `100000000`
+
+if ($s6 == $s5) $a1 = put_thick_bar($a0, $a1)
+else $a1 = put_thin_bar($a0, $a1)
+
+$s5 = `010000000` (shifted right)
+if ($s5 = 0) return $a0 + $a1
+
+$s6 = $s4 AND $s5
+`100001001` AND `010000000` = `000000000`
+
+if ($s6 == $s5) $a0 += 2 * $a1 //put thick space
+else ($s6 == 0) $a0 += $a1  // put thin space
+
+$s5 = `001000000` (shifted right)
+
+go to
+
+### put_thin_bar($a0, $s1)
+
+$a0 - starting x
+$a1 = `STARTING_Y`
+$s1 - width of thin bar
+
+put_pixel($a0, $a1) 
+$a1++
+if ($a1 <= 40) go to 
+$a0++
+$s1--
+if ($s1 == 0) return $a0
+$a1 = `STARTING_Y`
+go to
+
+### put_thick_bar($a0, $s1)
+
+$a0 - starting x
+$s1 - width of thin bar
+
+$a0 = put_thin_bar($a0, $s1)
+$a0 = put_thin_bar($a0, $s1)
+return $a0
