@@ -29,6 +29,7 @@ The `checksum` option must be enabled in a barcode scanner in order for the deco
 
 
 ## Implementation
-The source for the program is located in `bmp.asm` and `macros.asm` file and is written in Mips assembly language. The simplified logic of the core functions in pseudocode: 
+The source for the program is located in `bmp.asm` and `macros.asm` file. It is written in Mips assembly language. The simplified logic of the core functions in pseudocode is presented in form of diagrams below:
+
 
 ![Logic chart](documentation/logic.drawio.svg) 

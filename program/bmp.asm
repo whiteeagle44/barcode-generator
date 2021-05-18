@@ -18,6 +18,7 @@ oufile: .asciiz "output.bmp" #output file name
 error1: .asciiz  "Failed to open the white.bmp image file. \nRemember to place MARS.jar in the same location as the white.bmp image."
 error2: .asciiz  "Width inputted out of range. Give integer 1, 2 or 3.\n"
 error3: .asciiz "Character given is unsupported"
+error4: .asciiz  "Failed to save the output.bmp image file."
 msg1: 	.asciiz  "Input the width in pixels of narrowest bar (1, 2 or 3):"
 msg2: 	.asciiz  "Input the text to be encoded (1 to 9 characters):"
 text: 	.space   10  # buffer where encoded text will be (max 9 chars)
@@ -148,9 +149,12 @@ save_bmp:
         syscall
 	move 	$s1, $v0      # save the file descriptor
 	
-#check for errors - if the file was opened
-#...
+#check if file opened successfully
+	bge 	$v0, $zero, save
+	print(error4) 
+	j  	exit
 
+save:
 #save file
 	li 	$v0, 15
 	move 	$a0, $s1
